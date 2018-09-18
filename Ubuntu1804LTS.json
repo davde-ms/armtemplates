@@ -1,0 +1,311 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "type": "string"
+        },
+        "virtualMachineNamePrefix": {
+            "type": "string"
+        },
+        "virtualMachineCount": {
+            "type": "int"
+        },
+        "virtualMachineSize": {
+            "type": "string"
+        },
+        "adminUsername": {
+            "type": "string"
+        },
+        "adminPublicKey": {
+            "type":"string"
+        },
+        "dnsPrefixForPublicIP": {
+            "type": "string"
+        },
+        "virtualNetworkName": {
+            "type": "string"
+        },
+        "vnetAddressSpace": {
+            "type": "string"
+        },
+        "subnetName": {
+            "type": "string"
+        },
+        "subnetPrefix": {
+            "type": "string"
+        },
+        "publicIpAddressSku": {
+            "type": "string"
+        },
+        "autoShutdownStatus": {
+            "type": "string"
+        },
+        "autoShutdownTime": {
+            "type": "string"
+        },
+        "autoShutdownTimeZone": {
+            "type": "string"
+        },
+        "autoShutdownNotificationStatus": {
+            "type": "string"
+        },
+        "storageAccountType": {
+            "type": "string",
+            "allowedValues": [
+                "Standard_LRS",
+                "Premium_LRS"
+            ],
+            "metadata": {
+                "description" : "For SSDs choose Premium_LRS, otherwise pick Standard_LRS"
+            }
+        },
+        "diskSizeinGB": {
+            "type": "string",
+            "metadata": {
+                "description" : "Size in GB for the disk to be attached to the VM. Possible values range from 32 to 4095"
+            }
+        }
+    },
+
+    "variables": {
+        "vnetId": "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
+        "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]"
+    },
+
+
+    "resources": [{
+            "name": "[concat(parameters('virtualMachineNamePrefix'), copyIndex(1))]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2018-04-01",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('virtualMachineNamePrefix'), copyIndex(1), '-NIC1'))]"
+            ],
+            "copy": {
+                "name": "VMcopy",
+                "count": "[parameters('virtualMachineCount')]"
+            },
+            "properties": {
+                "osProfile": {
+                    "computerName": "[concat(parameters('virtualMachineNamePrefix'),copyIndex(1))]",
+                    "adminUsername": "[parameters('adminUsername')]",
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": "true",
+                        "ssh": {
+                            "publicKeys": [
+                                {
+                                    "path": "[concat('/home/', parameters('adminUsername'), '/.ssh/authorized_keys')]",
+                                    "keyData": "[parameters('adminPublicKey')]"
+                                }
+                            ]
+                        }
+                    }
+                },
+                
+                "hardwareProfile": {
+                    "vmSize": "[parameters('virtualMachineSize')]"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "Canonical",
+                        "offer": "UbuntuServer",
+                        "sku": "18.04-LTS",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "osType": "Linux",
+                        "name": "[concat(parameters('virtualMachineNamePrefix'),copyIndex(1),'osdisk')]",
+                        "createOption": "FromImage",
+                        "caching": "ReadWrite",
+                        "managedDisk": {
+                            "storageAccountType": "[parameters('storageAccountType')]"
+                        },
+                        "diskSizeGB": "[parameters('diskSizeinGB')]"
+                    },
+                    "dataDisks": []
+                },
+                "networkProfile": {
+                    "networkInterfaces": [{
+                        "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('virtualMachineNamePrefix'), copyIndex(1), '-NIC1'))]"
+                    }]
+                }
+            }
+            
+        },
+
+
+        {
+            "type": "Microsoft.DevTestLab/schedules",
+            "name": "[concat('shutdown-computevm-', parameters('virtualMachineNamePrefix'), copyIndex(1))]",
+            "apiVersion": "2017-04-26-preview",
+            "location": "[parameters('location')]",
+            "copy": {
+                "name": "SDcopy",
+                "count": "[parameters('virtualMachineCount')]"
+            },
+            "properties": {
+                "status": "[parameters('autoShutdownStatus')]",
+                "taskType": "ComputeVmShutdownTask",
+                "dailyRecurrence": {
+                    "time": "[parameters('autoShutdownTime')]"
+                },
+                "timeZoneId": "[parameters('autoShutdownTimeZone')]",
+                "targetResourceId": "[resourceId('Microsoft.Compute/virtualMachines', concat(parameters('virtualMachineNamePrefix'), copyIndex(1)))]",
+                "notificationSettings": {
+                    "status": "[parameters('autoShutdownNotificationStatus')]",
+                    "timeInMinutes": "30"
+                }
+            },
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineNamePrefix'), copyIndex(1))]"
+            ]
+        },
+
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[concat(parameters('virtualMachineNamePrefix'), copyIndex(1), '-NIC1')]",
+            "apiVersion": "2018-04-01",
+            "location": "[resourceGroup().location]",
+            "copy": {
+                "name": "NICCopy",
+                "count": "[parameters('virtualMachineCount')]"
+            },
+            "properties": {
+                "ipConfigurations": [{
+                    "name": "ipconfig1",
+                    "properties": {
+                        "privateIPAllocationMethod": "Dynamic",
+                        "publicIPAddress": {
+                            "id": "[resourceId('Microsoft.Network/publicIPAddresses', concat(parameters('virtualMachineNamePrefix'), copyIndex(1), '-PIP1'))]"
+                        },
+                        "subnet": {
+                            "id": "[variables('subnetRef')]"
+                        }
+                    }
+                }],
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', concat('nsg-', parameters('virtualMachineNamePrefix'), copyIndex(1)))]"
+                },
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableIPForwarding": false
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', concat(parameters('virtualMachineNamePrefix'), copyIndex(1), '-PIP1'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', concat('nsg-', parameters('virtualMachineNamePrefix'), copyIndex(1)))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(parameters('virtualMachineNamePrefix'), copyIndex(1),'/CustomScriptExtension')]",
+            "apiVersion": "2017-03-30",
+            "location": "[resourceGroup().location]",
+            "copy": {
+                "name": "EXTCopy",
+                "count": "[parameters('virtualMachineCount')]"
+            },
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.0",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "fileUris": [
+                        "https://deeplearningvmstg.blob.core.windows.net/assets/UbuntuLinuxDLExInstall.sh"
+                    ]
+                },
+                "protectedSettings": {
+                    "commandToExecute": "./UbuntuLinuxDLExInstall.sh"
+                }
+            },
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineNamePrefix'), copyIndex(1))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[parameters('virtualNetworkName')]",
+            "apiVersion": "2018-01-01",
+            "location": "[resourceGroup().location]",
+            "scale": null,
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[parameters('vnetAddressSpace')]"
+                    ]
+                },
+                "subnets": [{
+                    "name": "[parameters('subnetName')]",
+                    "properties": {
+                        "addressPrefix": "[parameters('subnetPrefix')]"
+                    }
+                }],
+                "virtualNetworkPeerings": [],
+                "enableDdosProtection": false,
+                "enableVmProtection": false
+            },
+            "dependsOn": []
+        },
+
+        {
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[concat(parameters('virtualMachineNamePrefix'), copyIndex(1), '-PIP1')]",
+            "apiVersion": "2017-08-01",
+            "location": "[parameters('location')]",
+            "copy": {
+                "name": "PIPcopy",
+                "count": "[parameters('virtualMachineCount')]"
+            },
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic",
+                "dnsSettings": {
+                    "domainNameLabel": "[concat(parameters('dnsPrefixForPublicIP'), copyIndex(1))]"
+                }
+            },
+            "tags": {
+                "displayName": "[concat(parameters('virtualMachineNamePrefix'), copyIndex(1), '-PIP1')]"
+            },
+            "sku": {
+                "name": "[parameters('publicIpAddressSku')]"
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "name": "[concat('nsg-', parameters('virtualMachineNamePrefix'), copyIndex(1))]",
+            "apiVersion": "2018-01-01",
+            "location": "[parameters('location')]",
+            "copy": {
+                "name": "NSGcopy",
+                "count": "[parameters('virtualMachineCount')]"
+            },
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "SSH",
+                        "properties": {
+                            "priority": 300,
+                            "protocol": "TCP",
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "sourceApplicationSecurityGroups": [],
+                            "destinationApplicationSecurityGroups": [],
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "22"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    "outputs": {
+        "adminUsername": {
+            "type": "string",
+            "value": "[parameters('adminUsername')]"
+        }
+    }
+}

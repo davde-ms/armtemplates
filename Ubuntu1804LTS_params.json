@@ -1,0 +1,60 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "eastus"
+        },
+        "virtualMachineNamePrefix": {
+            "value": "yourNodePrefixName"
+        },
+        "virtualMachineCount": {
+            "value": 3
+        },
+        "virtualMachineSize": {
+            "value": "Standard_NC6"
+        },
+        "storageAccountType" : {
+            "value": ""
+        },
+        "diskSizeinGB" : {
+            "value": "128"
+        },
+        "adminUsername": {
+            "value": "theAdminUserName"
+        },
+        "adminPublicKey" : {
+            "value": "Copy here your public ssh key value, something that begins with ssh-rsa and should look like: ssh-rsa AA1234NzaC1yc2EAAAADAQABAAABAQC6jKCwaasVmSqtuLCEw/Sg8bTXGdsKPA05otJODMoJqSlXF7qMoIRWFrTr2lWfwBfMsOVLjcTxtn78PdBk2482RTr1J/FhqSc10cxj7jCk4EW//ujpBhOQxxx2MljwqPlmjarL3ewwqPHqmaQt2D5vSgmBYt7L7UPwbEqaao1234eXBi4fYfmOaCrao/15uNslT7h9Ci7Dl123441RZtNKGGwErv3azlmZ55FG+HAr2TfJjaHbO+QVD6a0T1234mr1RN2VnHnc86eXsL4k8lPWkfCp251lyHeBcc++MNlcetO7Rttejbz5XmTgmqLPqG+7XoywrQdqT6jdJ7G3m7mr"
+        },
+        "virtualNetworkName": {
+            "value": "yourAzureVirtualNetworkName"
+        },
+        "vnetAddressSpace": {
+            "value": "10.0.0.0/16"
+        },
+        "subnetName": {
+            "value": "dsvm-subnet"
+        },
+        "subnetPrefix": {
+            "value": "10.0.0.0/24"
+        },
+        "dnsPrefixForPublicIP": {
+            "value": "yourPublicIPAddressNamePrefix"
+        },
+        "publicIpAddressSku": {
+            "value": "Basic"
+        },
+        "autoShutdownStatus": {
+            "value": "Enabled"
+        },
+        "autoShutdownTime": {
+            "value": "21:00"
+        },
+        "autoShutdownTimeZone": {
+            "value": "Eastern Standard Time"
+        },
+        "autoShutdownNotificationStatus": {
+            "value": "Disabled"
+        }
+    }
+}
