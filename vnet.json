@@ -2,10 +2,22 @@
     "$": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "parameterName": {
+        "vNetName": {
             "type": "string",
             "metadata": {
-                "description": ""
+                "description": "Name of the vNet you will be creating"
+            }
+        },
+        "vnetAddressSpace": {
+            "type": "string",
+            "metadata": {
+                "description": "Adress space for the vNet in CIDR notation (like 10.0.0.0/24)"
+            }
+        },
+        "location": {
+            "type": "string",
+            "metadata": {
+                "description": "Azure region you will be creating the vNet in"
             }
         }
     },
@@ -13,33 +25,31 @@
 
     },
     "resources": [{
-        "apiVersion": "2015-06-15",
-        "type": "Microsoft.Network/virtualNetworks",
-        "name": "VirtualNetwork1",
-        "location": "[resourceGroup().location]",
-        "tags": {
-            "displayName": "VirtualNetwork1"
-        },
-        "properties": {
-            "addressSpace": {
-                "addressPrefixes": [
-                    "10.0.0.0/16"
-                ]
-            },
-            "subnets": [{
-                    "name": "Subnet-1",
-                    "properties": {
-                        "addressPrefix": "10.0.0.0/24"
-                    }
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[parameters('vNetName')]",
+            "apiVersion": "2018-01-01",
+            "location": "[resourceGroup().location]",
+            "scale": null,
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[parameters('vnetAddressSpace')]"
+                    ]
                 },
-                {
-                    "name": "Subnet-2",
+                "subnets": [{
+                    "name": "[parameters('subnetName')]",
                     "properties": {
-                        "addressPrefix": "10.0.1.0/24"
+                        "addressPrefix": "[parameters('subnetPrefix')]"
                     }
-                }
-            ]
+                }],
+                "virtualNetworkPeerings": [],
+                "enableDdosProtection": false,
+                "enableVmProtection": false
+            },
+            "dependsOn": []
         }
-    }],
+
+    ],
+
     "outputs": {}
 }
