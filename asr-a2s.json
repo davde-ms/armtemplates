@@ -1,0 +1,47 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vaultName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the vault to create the policy in"
+            }
+        },
+        "appConsistentFrequency": {
+            "type": "string",
+            "metadata": {
+                "description": "Application consistent frequency specified in minutes"
+            }
+        },
+        "crashConsistentFrequency": {
+            "type": "string",
+            "metadata": {
+                "description": "Crash consistent frequency specified in minutes"
+            }
+        },
+        "recoveryPointHistory": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the subnet to create in the vNet"
+            }
+        }
+    },
+    "variables": {},
+    "resources": [{
+        "type": "Microsoft.RecoveryServices/vaults/replicationPolicies",
+        "name": "a2ajpnvault/24-hour-retention-policy",
+        "apiVersion": "2016-08-10",
+        "properties": {
+            "providerSpecificInput": {
+                "instanceType": "A2A",
+                "appConsistentFrequencyInMinutes": "[parameters('appConsistentFrequency')]",
+                "crashConsistentFrequencyInMinutes": "[parameters('crashConsistentFrequency')]",
+                "multiVmSyncStatus": "Enable",
+                "recoveryPointHistory": "[parameters('recoveryPointHistory')]"
+            }
+        },
+        "dependsOn": []
+    }],
+    "outputs": {}
+}
