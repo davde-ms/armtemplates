@@ -1,0 +1,51 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "eastus2"
+        },
+        "virtualMachineNamePrefix": {
+            "value": "DSVM-Ubuntu"
+        },
+        "virtualMachineCount": {
+            "value": 3
+        },
+        "virtualMachineSize": {
+            "value": "Standard_NC6"
+        },
+        "adminUsername": {
+            "value": "formation"
+        },
+        "virtualNetworkName": {
+            "value": "DSVM-vnet"
+        },
+        "vnetAddressSpace": {
+            "value": "10.0.0.0/16"
+        },
+        "subnetName": {
+            "value": "dsvm-subnet"
+        },
+        "subnetPrefix": {
+            "value": "10.0.0.0/24"
+        },
+        "dnsPrefixForPublicIP": {
+            "value": "dsvm-ulaval"
+        },
+        "publicIpAddressSku": {
+            "value": "Basic"
+        },
+        "autoShutdownStatus": {
+            "value": "Enabled"
+        },
+        "autoShutdownTime": {
+            "value": "21:00"
+        },
+        "autoShutdownTimeZone": {
+            "value": "Eastern Standard Time"
+        },
+        "autoShutdownNotificationStatus": {
+            "value": "Disabled"
+        }
+    }
+}

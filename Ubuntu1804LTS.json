@@ -49,6 +49,19 @@
         },
         "autoShutdownNotificationStatus": {
             "type": "string"
+        },
+        "storageAccountType": {
+            "type": "string",
+            "allowedValues": [
+                "Standard_LRS",
+                "Premium_LRS"
+            ]
+        },
+        "diskSizeinGB": {
+            "type": "string",
+            "metadata": {
+                "description" : "Size in GB for the disk to be attached to the VM. Possible values range from 32 to 4095"
+            }
         }
     },
 
@@ -103,9 +116,9 @@
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
-                            "storageAccountType": "Standard_LRS"
+                            "storageAccountType": "[parameters('storageAccountType')]"
                         },
-                        "diskSizeGB": 50
+                        "diskSizeGB": "[parameters('diskSizeinGB')]"
                     },
                     "dataDisks": []
                 },
@@ -149,7 +162,7 @@
         {
             "type": "Microsoft.Network/networkInterfaces",
             "name": "[concat(parameters('virtualMachineNamePrefix'), copyIndex(1), '-NIC1')]",
-            "apiVersion": "2016-03-30",
+            "apiVersion": "2018-04-01",
             "location": "[resourceGroup().location]",
             "copy": {
                 "name": "NICCopy",
@@ -259,46 +272,23 @@
         {
             "type": "Microsoft.Network/networkSecurityGroups",
             "name": "[concat('nsg-', parameters('virtualMachineNamePrefix'), copyIndex(1))]",
-            "apiVersion": "2017-06-01",
+            "apiVersion": "2018-01-01",
             "location": "[parameters('location')]",
             "copy": {
                 "name": "NSGcopy",
                 "count": "[parameters('virtualMachineCount')]"
             },
             "properties": {
-                "securityRules": [{
-                        "name": "default-allow-jupyterhub",
-                        "properties": {
-                            "priority": 1010,
-                            "protocol": "Tcp",
-                            "access": "Allow",
-                            "direction": "Inbound",
-                            "sourceAddressPrefix": "*",
-                            "sourcePortRange": "*",
-                            "destinationAddressPrefix": "*",
-                            "destinationPortRange": "8000"
-                        }
-                    },
+                "securityRules": [
                     {
-                        "name": "default-allow-rstudio-server",
+                        "name": "SSH",
                         "properties": {
-                            "priority": 1020,
-                            "protocol": "Tcp",
+                            "priority": 300,
+                            "protocol": "TCP",
                             "access": "Allow",
                             "direction": "Inbound",
-                            "sourceAddressPrefix": "*",
-                            "sourcePortRange": "*",
-                            "destinationAddressPrefix": "*",
-                            "destinationPortRange": "8787"
-                        }
-                    },
-                    {
-                        "name": "default-allow-ssh",
-                        "properties": {
-                            "priority": 1000,
-                            "protocol": "Tcp",
-                            "access": "Allow",
-                            "direction": "Inbound",
+                            "sourceApplicationSecurityGroups": [],
+                            "destinationApplicationSecurityGroups": [],
                             "sourceAddressPrefix": "*",
                             "sourcePortRange": "*",
                             "destinationAddressPrefix": "*",
