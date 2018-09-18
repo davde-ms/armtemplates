@@ -55,7 +55,10 @@
             "allowedValues": [
                 "Standard_LRS",
                 "Premium_LRS"
-            ]
+            ],
+            "metadata": {
+                "description" : "For SSDs choose Premium_LRS, otherwise pick Standard_LRS"
+            }
         },
         "diskSizeinGB": {
             "type": "string",
