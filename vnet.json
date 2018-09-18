@@ -11,7 +11,19 @@
         "vnetAddressSpace": {
             "type": "string",
             "metadata": {
-                "description": "Adress space for the vNet in CIDR notation (like 10.0.0.0/24)"
+                "description": "Adress space for the vNet in CIDR notation (like 10.0.0.0/8)"
+            }
+        },
+        "subnetName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the subnet to create in the vNet"
+            }
+        },
+        "subnetPrefix": {
+            "type": "string",
+            "metadata": {
+                "description": "Adress space for the subnet in CIDR notation (like 10.0.1.0/24)"
             }
         },
         "location": {
@@ -28,7 +40,7 @@
             "type": "Microsoft.Network/virtualNetworks",
             "name": "[parameters('vNetName')]",
             "apiVersion": "2018-01-01",
-            "location": "[resourceGroup().location]",
+            "location": "[parameters('location')]",
             "scale": null,
             "properties": {
                 "addressSpace": {
