@@ -6,25 +6,25 @@
             "value": "eastus"
         },
         "virtualMachineNamePrefix": {
-            "value": "yourNodePrefixName"
+            "value": "yournodenameprefix"
         },
         "virtualMachineCount": {
-            "value": 3
+            "value": 1
         },
         "virtualMachineSize": {
             "value": "Standard_NC6"
         },
-        "storageAccountType" : {
-            "value": ""
+        "storageAccountType": {
+            "value": "Standard_LRS"
         },
-        "diskSizeinGB" : {
+        "diskSizeinGB": {
             "value": "128"
         },
         "adminUsername": {
             "value": "theAdminUserName"
         },
-        "adminPublicKey" : {
-            "value": "Copy here your public ssh key value, something that begins with ssh-rsa and should look like: ssh-rsa AA1234NzaC1yc2EAAAADAQABAAABAQC6jKCwaasVmSqtuLCEw/Sg8bTXGdsKPA05otJODMoJqSlXF7qMoIRWFrTr2lWfwBfMsOVLjcTxtn78PdBk2482RTr1J/FhqSc10cxj7jCk4EW//ujpBhOQxxx2MljwqPlmjarL3ewwqPHqmaQt2D5vSgmBYt7L7UPwbEqaao1234eXBi4fYfmOaCrao/15uNslT7h9Ci7Dl123441RZtNKGGwErv3azlmZ55FG+HAr2TfJjaHbO+QVD6a0T1234mr1RN2VnHnc86eXsL4k8lPWkfCp251lyHeBcc++MNlcetO7Rttejbz5XmTgmqLPqG+7XoywrQdqT6jdJ7G3m7mr"
+        "adminPublicKey": {
+            "value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQ (...)"
         },
         "virtualNetworkName": {
             "value": "yourAzureVirtualNetworkName"
@@ -39,7 +39,7 @@
             "value": "10.0.0.0/24"
         },
         "dnsPrefixForPublicIP": {
-            "value": "yourPublicIPAddressNamePrefix"
+            "value": "ipprefix"
         },
         "publicIpAddressSku": {
             "value": "Basic"
