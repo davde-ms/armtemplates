@@ -1,0 +1,70 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+
+    "resources": [{
+            "apiVersion": "2017-05-10",
+            "type": "Microsoft.Resources/deployments",
+            "name": "hubvNetCreationTemplate",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/davde-ms/armtemplates/master/vnetPeering/vnet.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parametersLink": {
+                    "uri": "https://raw.githubusercontent.com/davde-ms/armtemplates/master/vnetPeering/vnethub_params.json",
+                    "contentVersion": "1.0.0.0"
+                }
+            }
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "type": "Microsoft.Resources/deployments",
+            "name": "vNet1CreationTemplate",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/davde-ms/armtemplates/master/vnetPeering/vnet.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parametersLink": {
+                    "uri": "https://raw.githubusercontent.com/davde-ms/armtemplates/master/vnetPeering/vnet1_params.json",
+                    "contentVersion": "1.0.0.0"
+                }
+            }
+        },
+
+        {
+            "apiVersion": "2017-05-10",
+            "type": "Microsoft.Resources/deployments",
+            "name": "vNet2CreationTemplate",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/davde-ms/armtemplates/master/vnetPeering/vnet.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parametersLink": {
+                    "uri": "https://raw.githubusercontent.com/davde-ms/armtemplates/master/vnetPeering/vnet2_params.json",
+                    "contentVersion": "1.0.0.0"
+                }
+            }
+        },
+
+        {
+            "apiVersion": "2017-05-10",
+            "type": "Microsoft.Resources/deployments",
+            "name": "linkedTemplateC",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/davde-ms/armtemplates/master/vnetPeering/peering.json",
+                    "contentVersion": "1.0.0.0"
+                }
+            }
+        }
+
+
+    ]
+}

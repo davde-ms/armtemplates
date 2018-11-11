@@ -1,0 +1,33 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "canadacentral"
+        },
+        "vnetName": {
+            "value": "vnet_hub_canadacentral"
+        },
+        "vnetAddressPrefix": {
+            "value": "10.0.0.0/16"
+        },
+        "subnet1Name": {
+            "value": "GatewaySubnet"
+        },
+        "subnet1Prefix": {
+            "value": "10.0.1.0/27"
+        },
+        "subnet2Name": {
+            "value": "BackEnd"
+        },
+        "subnet2Prefix": {
+            "value": "10.0.2.0/24"
+        },
+        "subnet3Name": {
+            "value": "SharedInfra"
+        },
+        "subnet3Prefix": {
+            "value": "10.0.3.0/24"
+        }
+    }
+}
