@@ -18,7 +18,7 @@
             "type": "string"
         },
         "adminPublicKey": {
-            "type":"string"
+            "type": "string"
         },
         "dnsPrefixForPublicIP": {
             "type": "string"
@@ -57,13 +57,13 @@
                 "Premium_LRS"
             ],
             "metadata": {
-                "description" : "For SSDs choose Premium_LRS, otherwise pick Standard_LRS"
+                "description": "For SSDs choose Premium_LRS, otherwise pick Standard_LRS"
             }
         },
         "diskSizeinGB": {
             "type": "string",
             "metadata": {
-                "description" : "Size in GB for the disk to be attached to the VM. Possible values range from 32 to 4095"
+                "description": "Size in GB for the disk to be attached to the VM. Possible values range from 32 to 4095"
             }
         }
     },
@@ -93,16 +93,14 @@
                     "linuxConfiguration": {
                         "disablePasswordAuthentication": "true",
                         "ssh": {
-                            "publicKeys": [
-                                {
-                                    "path": "[concat('/home/', parameters('adminUsername'), '/.ssh/authorized_keys')]",
-                                    "keyData": "[parameters('adminPublicKey')]"
-                                }
-                            ]
+                            "publicKeys": [{
+                                "path": "[concat('/home/', parameters('adminUsername'), '/.ssh/authorized_keys')]",
+                                "keyData": "[parameters('adminPublicKey')]"
+                            }]
                         }
                     }
                 },
-                
+
                 "hardwareProfile": {
                     "vmSize": "[parameters('virtualMachineSize')]"
                 },
@@ -131,7 +129,7 @@
                     }]
                 }
             }
-            
+
         },
 
 
@@ -282,23 +280,21 @@
                 "count": "[parameters('virtualMachineCount')]"
             },
             "properties": {
-                "securityRules": [
-                    {
-                        "name": "SSH",
-                        "properties": {
-                            "priority": 300,
-                            "protocol": "TCP",
-                            "access": "Allow",
-                            "direction": "Inbound",
-                            "sourceApplicationSecurityGroups": [],
-                            "destinationApplicationSecurityGroups": [],
-                            "sourceAddressPrefix": "*",
-                            "sourcePortRange": "*",
-                            "destinationAddressPrefix": "*",
-                            "destinationPortRange": "22"
-                        }
+                "securityRules": [{
+                    "name": "SSH",
+                    "properties": {
+                        "priority": 300,
+                        "protocol": "Tcp",
+                        "access": "Allow",
+                        "direction": "Inbound",
+                        "sourceApplicationSecurityGroups": [],
+                        "destinationApplicationSecurityGroups": [],
+                        "sourceAddressPrefix": "*",
+                        "sourcePortRange": "*",
+                        "destinationAddressPrefix": "*",
+                        "destinationPortRange": "22"
                     }
-                ]
+                }]
             }
         }
     ],

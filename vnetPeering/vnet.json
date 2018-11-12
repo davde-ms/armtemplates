@@ -1,0 +1,108 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "type": "string",
+            "defaultValue": "canadacentral",
+            "allowedValues": [
+                "canadacentral",
+                "canadaeast"
+            ],
+            "metadata": {
+                "description": "Deployment location"
+            }
+        },
+        "vnetName": {
+            "type": "string",
+            "defaultValue": "myvNet",
+            "metadata": {
+                "description": "vNet Name"
+            }
+        },
+        "vnetAddressPrefix": {
+            "type": "string",
+            "defaultValue": "10.0.0.0/16",
+            "metadata": {
+                "description": "vNet Address prefix"
+            }
+        },
+        "subnet1Prefix": {
+            "type": "string",
+            "defaultValue": "10.0.1.0/24",
+            "metadata": {
+                "description": "Subnet1 Prefix"
+            }
+        },
+        "subnet1Name": {
+            "type": "string",
+            "defaultValue": "FronteEnd",
+            "metadata": {
+                "description": "Subnet1 Name"
+            }
+        },
+        "subnet2Prefix": {
+            "type": "string",
+            "defaultValue": "10.0.2.0/24",
+            "metadata": {
+                "description": "Subnet2 Prefix"
+            }
+        },
+        "subnet2Name": {
+            "type": "string",
+            "defaultValue": "BackEnd",
+            "metadata": {
+                "description": "Subnet2 Name"
+            }
+        },
+        "subnet3Prefix": {
+            "type": "string",
+            "defaultValue": "10.0.3.0/24",
+            "metadata": {
+                "description": "Subnet3 Prefix"
+            }
+        },
+        "subnet3Name": {
+            "type": "string",
+            "defaultValue": "Infrastructure",
+            "metadata": {
+                "description": "Subnet3 Name"
+            }
+        }
+    },
+
+    "variables": {},
+
+    "resources": [{
+        "apiVersion": "2018-08-01",
+        "type": "Microsoft.Network/virtualNetworks",
+        "name": "[parameters('vnetName')]",
+        "location": "[parameters('location')]",
+        "properties": {
+            "addressSpace": {
+                "addressPrefixes": [
+                    "[parameters('vnetAddressPrefix')]"
+                ]
+            },
+            "subnets": [{
+                    "name": "[parameters('subnet1Name')]",
+                    "properties": {
+                        "addressPrefix": "[parameters('subnet1Prefix')]"
+                    }
+                },
+                {
+                    "name": "[parameters('subnet2Name')]",
+                    "properties": {
+                        "addressPrefix": "[parameters('subnet2Prefix')]"
+                    }
+                },
+                {
+                    "name": "[parameters('subnet3Name')]",
+                    "properties": {
+                        "addressPrefix": "[parameters('subnet3Prefix')]"
+                    }
+                }
+            ]
+        }
+    }]
+}
