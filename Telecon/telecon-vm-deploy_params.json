@@ -6,7 +6,7 @@
             "value": "canadacentral"
         },
         "virtualMachineNamePrefix": {
-            "value": "AOS"
+            "value": "srmaz"
         },
         "vmSuffixStartNumber": {
             "value": 674
@@ -21,7 +21,7 @@
             "value": "localadminusername"
         },
         "adminPassword": {
-            "value": "Lilly23/02/1999"
+            "value": "This`1sma6be4st0gn"
         },
         "networkSecurityGroupRules": {
             "value": []
