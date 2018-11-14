@@ -8,6 +8,9 @@
         "virtualMachineNamePrefix": {
             "value": "AOS"
         },
+        "vmSuffixStartNumber": {
+            "value": 674
+        },
         "virtualMachineCount": {
             "value": 3
         },
@@ -15,7 +18,7 @@
             "value": "Standard_E4s_v3"
         },
         "adminUsername": {
-            "value": "ddebacker"
+            "value": "localadminusername"
         },
         "adminPassword": {
             "value": "Lilly23/02/1999"
