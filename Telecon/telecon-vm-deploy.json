@@ -1,0 +1,208 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "type": "string"
+        },
+        "virtualMachineNamePrefix": {
+            "type": "string"
+        },
+        "virtualMachineCount": {
+            "type": "int"
+        },
+        "virtualMachineSize": {
+            "type": "string"
+        },
+        "adminUsername": {
+            "type": "string"
+        },
+        "adminPassword": {
+            "type": "securestring"
+        },
+        "networkSecurityGroupRules": {
+            "type": "array"
+        },
+        "virtualNetworkId": {
+            "type": "string"
+        },
+        "subnetName": {
+            "type": "string"
+        },
+        "publicIpAddressSku": {
+            "type": "string"
+        },
+        "osDiskType": {
+            "type": "string"
+        },
+        "diskSizeinGB": {
+            "type": "int"
+        },
+        "availabilitySetName": {
+            "type": "string"
+        },
+        "availabilitySetPlatformFaultDomainCount": {
+            "type": "int"
+        },
+        "availabilitySetPlatformUpdateDomainCount": {
+            "type": "int"
+        }
+    },
+    "variables": {
+        "vnetId": "[parameters('virtualNetworkId')]",
+        "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]"
+    },
+    "resources": [{
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[concat(parameters('virtualMachineNamePrefix'), copyIndex(1))]",
+            "apiVersion": "2018-06-01",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('virtualMachineNamePrefix'), copyIndex(1), '-NIC1'))]",
+                "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetName'))]"
+            ],
+            "copy": {
+                "name": "VMcopy",
+                "count": "[parameters('virtualMachineCount')]"
+            },
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[parameters('virtualMachineSize')]"
+                },
+                "storageProfile": {
+                    "osDisk": {
+                        "name": "[concat(parameters('virtualMachineNamePrefix'), copyIndex(1), '-disk')]",
+                        "createOption": "FromImage",
+                        "diskSizeGB": "[parameters('diskSizeinGB')]",
+                        "managedDisk": {
+                            "storageAccountType": "[parameters('osDiskType')]"
+                        }
+                    },
+                    "imageReference": {
+                        "publisher": "MicrosoftWindowsServer",
+                        "offer": "WindowsServer",
+                        "sku": "2016-Datacenter",
+                        "version": "latest"
+                    }
+                },
+                "networkProfile": {
+                    "networkInterfaces": [{
+                        "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('virtualMachineNamePrefix'), copyIndex(1), '-NIC1'))]"
+                    }]
+                },
+                "osProfile": {
+                    "computerName": "[concat(parameters('virtualMachineNamePrefix'),copyIndex(1))]",
+                    "adminUsername": "[parameters('adminUsername')]",
+                    "adminPassword": "[parameters('adminPassword')]",
+                    "windowsConfiguration": {
+                        "enableAutomaticUpdates": true,
+                        "provisionVmAgent": true
+                    }
+                },
+                "availabilitySet": {
+                    "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySetName'))]"
+                }
+            },
+            "tags": {
+                "Department": "AX"
+            }
+        },
+        {
+            "name": "[parameters('availabilitySetName')]",
+            "type": "Microsoft.Compute/availabilitySets",
+            "apiVersion": "2016-04-30-preview",
+            "location": "[parameters('location')]",
+            "properties": {
+                "platformFaultDomainCount": "[parameters('availabilitySetPlatformFaultDomainCount')]",
+                "platformUpdateDomainCount": "[parameters('availabilitySetPlatformUpdateDomainCount')]"
+            },
+            "sku": {
+                "name": "Aligned"
+            },
+            "tags": {
+                "Department": "AX"
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[concat(parameters('virtualMachineNamePrefix'), copyIndex(1), '-NIC1')]",
+            "apiVersion": "2018-04-01",
+            "location": "[parameters('location')]",
+            "copy": {
+                "name": "NICCopy",
+                "count": "[parameters('virtualMachineCount')]"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', concat(parameters('virtualMachineNamePrefix'), copyIndex(1), '-PIP'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', concat('nsg-', parameters('virtualMachineNamePrefix'), copyIndex(1)))]"
+            ],
+            "properties": {
+                "ipConfigurations": [{
+                    "name": "ipconfig1",
+                    "properties": {
+                        "privateIPAllocationMethod": "Dynamic",
+                        "publicIPAddress": {
+                            "id": "[resourceId('Microsoft.Network/publicIPAddresses', concat(parameters('virtualMachineNamePrefix'), copyIndex(1), '-PIP'))]"
+                        },
+                        "subnet": {
+                            "id": "[variables('subnetRef')]"
+                        }
+                    }
+                }],
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', concat('nsg-', parameters('virtualMachineNamePrefix'), copyIndex(1)))]"
+                },
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableIPForwarding": false
+            },
+
+            "tags": {
+                "Department": "AX"
+            }
+        },
+        {
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[concat(parameters('virtualMachineNamePrefix'), copyIndex(1), '-PIP')]",
+            "apiVersion": "2017-08-01",
+            "location": "[parameters('location')]",
+            "copy": {
+                "name": "PIPcopy",
+                "count": "[parameters('virtualMachineCount')]"
+            },
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic"
+            },
+            "tags": {
+                "displayName": "[concat(parameters('virtualMachineNamePrefix'), copyIndex(1), '-PIP')]"
+            },
+            "sku": {
+                "name": "[parameters('publicIpAddressSku')]"
+            }
+        },
+        {
+            "name": "[concat('nsg-', parameters('virtualMachineNamePrefix'), copyIndex(1))]",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2018-08-01",
+            "location": "[parameters('location')]",
+            "copy": {
+                "name": "NSGcopy",
+                "count": "[parameters('virtualMachineCount')]"
+            },
+            "properties": {
+                "securityRules": "[parameters('networkSecurityGroupRules')]"
+            },
+            "tags": {
+                "Department": "AX"
+            }
+        }
+
+    ],
+    "outputs": {
+        "adminUsername": {
+            "type": "string",
+            "value": "[parameters('adminUsername')]"
+        }
+    }
+}

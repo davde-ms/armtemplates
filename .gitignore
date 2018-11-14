@@ -1,1 +1,3 @@
 *.bak
+Telecon/deploy.ps1
+Telecon/deploy.sh

@@ -1,0 +1,51 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "canadacentral"
+        },
+        "virtualMachineNamePrefix": {
+            "value": "AOS"
+        },
+        "virtualMachineCount": {
+            "value": 3
+        },
+        "virtualMachineSize": {
+            "value": "Standard_E4s_v3"
+        },
+        "adminUsername": {
+            "value": "ddebacker"
+        },
+        "adminPassword": {
+            "value": "Lilly23/02/1999"
+        },
+        "networkSecurityGroupRules": {
+            "value": []
+        },
+        "virtualNetworkId": {
+            "value": "/subscriptions/5a964cf5-1aeb-4356-b3a1-c76337b405da/resourceGroups/Telecon/providers/Microsoft.Network/virtualNetworks/vnet_canadacentral"
+        },
+        "subnetName": {
+            "value": "Test"
+        },
+        "publicIpAddressSku": {
+            "value": "Basic"
+        },
+        "osDiskType": {
+            "value": "Premium_LRS"
+        },
+        "diskSizeinGB": {
+            "value": 128
+        },
+        "availabilitySetName": {
+            "value": "AOS-AS-Canadacentral"
+        },
+        "availabilitySetPlatformFaultDomainCount": {
+            "value": 2
+        },
+        "availabilitySetPlatformUpdateDomainCount": {
+            "value": 4
+        }
+    }
+}
