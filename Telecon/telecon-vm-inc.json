@@ -58,11 +58,11 @@
     },
     "resources": [{
             "type": "Microsoft.Compute/virtualMachines",
-            "name": "[concat(parameters('virtualMachineNamePrefix'), add(variables('vmSuffixStart'), copyIndex(1)))]",
+            "name": "[concat(parameters('virtualMachineNamePrefix'), add(variables('vmSuffixStart'), copyIndex(1)), 'M')]",
             "apiVersion": "2018-06-01",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('virtualMachineNamePrefix'), add(variables('vmSuffixStart'), copyIndex(1)), '-NIC1'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('virtualMachineNamePrefix'), add(variables('vmSuffixStart'), copyIndex(1)), 'M-NIC1'))]",
                 "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetName'))]"
             ],
             "copy": {
@@ -75,7 +75,7 @@
                 },
                 "storageProfile": {
                     "osDisk": {
-                        "name": "[concat(parameters('virtualMachineNamePrefix'), add(variables('vmSuffixStart'), copyIndex(1)), '-disk')]",
+                        "name": "[concat(parameters('virtualMachineNamePrefix'), add(variables('vmSuffixStart'), copyIndex(1)), 'M-disk')]",
                         "createOption": "FromImage",
                         "diskSizeGB": "[parameters('diskSizeinGB')]",
                         "managedDisk": {
@@ -91,11 +91,11 @@
                 },
                 "networkProfile": {
                     "networkInterfaces": [{
-                        "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('virtualMachineNamePrefix'), add(variables('vmSuffixStart'), copyIndex(1)), '-NIC1'))]"
+                        "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('virtualMachineNamePrefix'), add(variables('vmSuffixStart'), copyIndex(1)), 'M-NIC1'))]"
                     }]
                 },
                 "osProfile": {
-                    "computerName": "[concat(parameters('virtualMachineNamePrefix'),copyIndex(1))]",
+                    "computerName": "[concat(parameters('virtualMachineNamePrefix'), add(variables('vmSuffixStart'), copyIndex(1)), 'M')]",
                     "adminUsername": "[parameters('adminUsername')]",
                     "adminPassword": "[parameters('adminPassword')]",
                     "windowsConfiguration": {
@@ -106,9 +106,6 @@
                 "availabilitySet": {
                     "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySetName'))]"
                 }
-            },
-            "tags": {
-                "Department": "AX"
             }
         },
         {
@@ -122,14 +119,11 @@
             },
             "sku": {
                 "name": "Aligned"
-            },
-            "tags": {
-                "Department": "AX"
             }
         },
         {
             "type": "Microsoft.Network/networkInterfaces",
-            "name": "[concat(parameters('virtualMachineNamePrefix'), add(variables('vmSuffixStart'), copyIndex(1)), '-NIC1')]",
+            "name": "[concat(parameters('virtualMachineNamePrefix'), add(variables('vmSuffixStart'), copyIndex(1)), 'M-NIC1')]",
             "apiVersion": "2018-04-01",
             "location": "[parameters('location')]",
             "copy": {
@@ -137,8 +131,8 @@
                 "count": "[parameters('virtualMachineCount')]"
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Network/publicIPAddresses', concat(parameters('virtualMachineNamePrefix'), add(variables('vmSuffixStart'), copyIndex(1)), '-PIP'))]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', concat('nsg-', parameters('virtualMachineNamePrefix'), add(variables('vmSuffixStart'), copyIndex(1))))]"
+                "[resourceId('Microsoft.Network/publicIPAddresses', concat(parameters('virtualMachineNamePrefix'), add(variables('vmSuffixStart'), copyIndex(1)), 'M-PIP'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', concat('nsg-', parameters('virtualMachineNamePrefix'), add(variables('vmSuffixStart'), copyIndex(1)), 'M'))]"
             ],
             "properties": {
                 "ipConfigurations": [{
@@ -146,7 +140,7 @@
                     "properties": {
                         "privateIPAllocationMethod": "Dynamic",
                         "publicIPAddress": {
-                            "id": "[resourceId('Microsoft.Network/publicIPAddresses', concat(parameters('virtualMachineNamePrefix'), add(variables('vmSuffixStart'), copyIndex(1)), '-PIP'))]"
+                            "id": "[resourceId('Microsoft.Network/publicIPAddresses', concat(parameters('virtualMachineNamePrefix'), add(variables('vmSuffixStart'), copyIndex(1)), 'M-PIP'))]"
                         },
                         "subnet": {
                             "id": "[variables('subnetRef')]"
@@ -154,21 +148,17 @@
                     }
                 }],
                 "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', concat('nsg-', parameters('virtualMachineNamePrefix'), add(variables('vmSuffixStart'), copyIndex(1))))]"
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', concat('nsg-', parameters('virtualMachineNamePrefix'), add(variables('vmSuffixStart'), copyIndex(1)), 'M'))]"
                 },
                 "dnsSettings": {
                     "dnsServers": []
                 },
                 "enableIPForwarding": false
-            },
-
-            "tags": {
-                "Department": "AX"
             }
         },
         {
             "type": "Microsoft.Network/publicIPAddresses",
-            "name": "[concat(parameters('virtualMachineNamePrefix'), add(variables('vmSuffixStart'), copyIndex(1)), '-PIP')]",
+            "name": "[concat(parameters('virtualMachineNamePrefix'), add(variables('vmSuffixStart'), copyIndex(1)), 'M-PIP')]",
             "apiVersion": "2017-08-01",
             "location": "[parameters('location')]",
             "copy": {
@@ -179,14 +169,14 @@
                 "publicIPAllocationMethod": "Dynamic"
             },
             "tags": {
-                "displayName": "[concat(parameters('virtualMachineNamePrefix'), add(variables('vmSuffixStart'), copyIndex(1)), '-PIP')]"
+                "displayName": "[concat(parameters('virtualMachineNamePrefix'), add(variables('vmSuffixStart'), copyIndex(1)), 'M-PIP')]"
             },
             "sku": {
                 "name": "[parameters('publicIpAddressSku')]"
             }
         },
         {
-            "name": "[concat('nsg-', parameters('virtualMachineNamePrefix'), add(variables('vmSuffixStart'), copyIndex(1)))]",
+            "name": "[concat('nsg-', parameters('virtualMachineNamePrefix'), add(variables('vmSuffixStart'), copyIndex(1)), 'M')]",
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2018-08-01",
             "location": "[parameters('location')]",
@@ -196,9 +186,6 @@
             },
             "properties": {
                 "securityRules": "[parameters('networkSecurityGroupRules')]"
-            },
-            "tags": {
-                "Department": "AX"
             }
         }
 

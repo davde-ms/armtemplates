@@ -6,7 +6,7 @@
             "value": "canadacentral"
         },
         "virtualMachineNamePrefix": {
-            "value": "srmaz"
+            "value": "SRV"
         },
         "vmSuffixStartNumber": {
             "value": 674
