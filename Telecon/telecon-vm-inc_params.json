@@ -8,14 +8,17 @@
         "virtualMachineNamePrefix": {
             "value": "SRV"
         },
+        "vmSuffixStartNumber": {
+            "value": 1
+        },
         "virtualMachineCount": {
             "value": 1
         },
         "virtualMachineSize": {
-            "value": "Standard_E4s_v3"
+            "value": "Standard_D2s_v3"
         },
         "adminUsername": {
-            "value": "localadminusername"
+            "value": "ddebacker"
         },
         "adminPassword": {
             "value": "This`1sma6be4st0gn"
