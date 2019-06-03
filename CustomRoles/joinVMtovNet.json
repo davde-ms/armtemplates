@@ -1,0 +1,28 @@
+{
+"Name":  "Virtual Network Join",
+"IsCustom":  true,
+"Description":  "Lets you join virtual machines to a vNet/subnet, but not alter the vNet or subnet they\u0027re connecting to.",
+"Actions":  [
+                "Microsoft.Authorization/*/read",
+                "Microsoft.Network/locations/*",
+                "Microsoft.Network/networkSecurityGroups/*",
+                "Microsoft.Network/virtualNetworks/read",
+                "Microsoft.Network/virtualNetworks/subnets/join/action",
+                "Microsoft.Resources/deployments/*",
+                "Microsoft.Resources/subscriptions/resourceGroups/read",
+                "Microsoft.Support/*"
+                
+            ],
+"NotActions":  [
+
+               ],
+"DataActions":  [
+
+                ],
+"NotDataActions":  [
+
+                   ],
+"AssignableScopes":  [
+                         "/subscriptions/1c9c57c1-a270-4b24-ac78-3849644d55f5"
+                     ]
+}
