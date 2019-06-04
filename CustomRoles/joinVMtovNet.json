@@ -1,5 +1,5 @@
 {
-"Name":  "Virtual Network Join",
+"Name":  "Virtual Machine vNet Join role",
 "IsCustom":  true,
 "Description":  "Lets you join virtual machines to a vNet/subnet, but not alter the vNet or subnet they\u0027re connecting to.",
 "Actions":  [
@@ -9,8 +9,7 @@
                 "Microsoft.Network/virtualNetworks/read",
                 "Microsoft.Network/virtualNetworks/subnets/join/action",
                 "Microsoft.Resources/deployments/*",
-                "Microsoft.Resources/subscriptions/resourceGroups/read",
-                "Microsoft.Support/*"
+                "Microsoft.Resources/subscriptions/resourceGroups/read"
                 
             ],
 "NotActions":  [
