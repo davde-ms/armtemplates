@@ -115,7 +115,7 @@
             },
             "tags": {
                 "vmWorkload": "DomainController",
-                "owner": "derek.moller@easternhealth.ca",
+                "owner": "greg.forward@centralhealth.nl.ca",
                 "environment": "Production"
             }
         },
@@ -129,7 +129,7 @@
             },
             "tags": {
                 "vmWorkload": "DomainController",
-                "owner": "derek.moller@easternhealth.ca",
+                "owner": "greg.forward@centralhealth.nl.ca",
                 "environment": "Production"
             }
         },
@@ -146,7 +146,7 @@
             },
             "tags": {
                 "vmWorkload": "DomainController",
-                "owner": "derek.moller@easternhealth.ca",
+                "owner": "greg.forward@centralhealth.nl.ca",
                 "environment": "Production"
             }
         },
@@ -165,7 +165,7 @@
             },
             "tags": {
                 "vmWorkload": "DomainController",
-                "owner": "derek.moller@easternhealth.ca",
+                "owner": "greg.forward@centralhealth.nl.ca",
                 "environment": "Production"
             }
         },
@@ -239,7 +239,7 @@
             },
             "tags": {
                 "vmWorkload": "DomainController",
-                "owner": "derek.moller@easternhealth.ca",
+                "owner": "greg.forward@centralhealth.nl.ca",
                 "environment": "Production"
             }
         },
@@ -257,7 +257,7 @@
             },
             "tags": {
                 "vmWorkload": "DomainController",
-                "owner": "derek.moller@easternhealth.ca",
+                "owner": "greg.forward@centralhealth.nl.ca",
                 "environment": "Production"
             }
         },
@@ -286,7 +286,7 @@
             },
             "tags": {
                 "vmWorkload": "DomainController",
-                "owner": "derek.moller@easternhealth.ca",
+                "owner": "greg.forward@centralhealth.nl.ca",
                 "environment": "Production"
             }
         }

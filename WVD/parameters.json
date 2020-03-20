@@ -6,13 +6,13 @@
             "value": "canadacentral"
         },
         "vmPrefix": {
-            "value": "EH-AD"
+            "value": "CH-AD"
         },
         "vmSuffix": {
             "value": "Cloud"
         },
         "vmSuffixStartNumber": {
-            "value": 7
+            "value": 4
         },
         "networkSecurityGroupRules": {
             "value": [
@@ -32,10 +32,10 @@
             ]
         },
         "subnetName": {
-            "value": "default"
+            "value": "eh-hub-infra-subnet"
         },
         "virtualNetworkId": {
-            "value": "/subscriptions/1c9c57c1-a270-4b24-ac78-3849644d55f5/resourceGroups/Trash/providers/Microsoft.Network/virtualNetworks/testvnet"
+            "value": "/subscriptions/c36951e2-4509-424b-b5b2-04524d5df3d1/resourceGroups/eh-hub-rg/providers/Microsoft.Network/virtualNetworks/eh-hub-vnet"
         },
         "publicIpAddressType": {
             "value": "Dynamic"
@@ -70,7 +70,7 @@
                 {
                     "sku": "Premium_LRS",
                     "properties": {
-                        "diskSizeGB": 128,
+                        "diskSizeGB": 256,
                         "creationData": {
                             "createOption": "empty"
                         }
@@ -82,13 +82,13 @@
             "value": "Standard_D2s_v3"
         },
         "adminUsername": {
-            "value": "ddebacker"
+            "value": "admin"
         },
         "adminPassword": {
-            "value": "Lilly23/02/1999"
+            "value": "adminpassword"
         },
         "availabilitySetName": {
-            "value": "EH-AS-AD"
+            "value": "CH-Infra-AD-AS"
         },
         "availabilitySetPlatformFaultDomainCount": {
             "value": 2
@@ -112,7 +112,7 @@
             "value": "en"
         },
         "autoShutdownNotificationEmail": {
-            "value": "davde@microsoft.com"
+            "value": "user@emaildomain.com"
         }
     }
 }

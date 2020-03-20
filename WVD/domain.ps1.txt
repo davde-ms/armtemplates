@@ -18,7 +18,7 @@ Install-ADDSDomainController `
 
 -CreateDnsDelegation:$false `
 
--Credential (Get-Credential domain\username) `
+-Credential (Get-Credential CONUNDRUM\Administrator) `
 
 -CriticalReplicationOnly:$false `
 
