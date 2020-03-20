@@ -1,0 +1,349 @@
+{
+   "if": {
+      "allOf": [
+         {
+            "field": "type",
+            "in": [
+               "Microsoft.Compute/virtualMachines",
+               "Microsoft.Compute/VirtualMachineScaleSets"
+            ]
+         },
+         {
+            "not" : 
+            {
+               "anyOf" : [
+                  {
+                     "allOf" : [
+                        {
+                           "field": "Microsoft.Compute/imagePublisher",
+                           "equals": "checkpoint"
+                           
+                        }                        
+                     ]
+                  },
+                  {
+                     "allOf" : [
+                        {
+                           "field": "Microsoft.Compute/imagePublisher",
+                           "equals": "paloaltonetworks"
+                           
+                        },
+                        {
+                          "field": "Microsoft.Compute/imageOffer",
+                          "equals": "vmseries1"
+                       },
+                       {
+                          "field": "Microsoft.Compute/imageSku",
+                          "equals": "byol"
+                       }
+                     ]
+                  },
+                  {
+                     "allOf" : [
+                        {
+                           "field": "Microsoft.Compute/imagePublisher",
+                           "equals": "fortinet"
+                           
+                        },
+                        {
+                          "field": "Microsoft.Compute/imageOffer",
+                          "equals": "fortinet-fortianalyzer"
+                       },
+                       {
+                          "field": "Microsoft.Compute/imageSku",
+                          "equals": "fortinet-fortianalyzer"
+                       }
+                     ]
+                  },
+                  {
+                     "allOf" : [
+                        {
+                           "field": "Microsoft.Compute/imagePublisher",
+                           "equals": "fortinet"
+                           
+                        },
+                        {
+                          "field": "Microsoft.Compute/imageOffer",
+                          "equals": "fortinet-fortimanager"
+                       },
+                       {
+                          "field": "Microsoft.Compute/imageSku",
+                          "equals": "fortinet-fortimanager"
+                       }
+                     ]
+                  },
+                  {
+                     "allOf" : [
+                        {
+                           "field": "Microsoft.Compute/imagePublisher",
+                           "equals": "fortinet"
+                           
+                        },
+                        {
+                          "field": "Microsoft.Compute/imageOffer",
+                          "equals": "fortinet_fortigate-vm_v5"
+                       },
+                       {
+                          "field": "Microsoft.Compute/imageSku",
+                          "equals": "fortinet_fg-vm"
+                       }
+                     ]
+                  },
+                  {
+                     "allOf" : [
+                        {
+                           "field": "Microsoft.Compute/imagePublisher",
+                           "equals": "fortinet"
+                           
+                        },
+                        {
+                          "field": "Microsoft.Compute/imageOffer",
+                          "equals": "fortinet_fortiweb-vm_v5"
+                       },
+                       {
+                          "field": "Microsoft.Compute/imageSku",
+                          "equals": "fortinet_fw-vm"
+                       }
+                     ]
+                  },
+                  {
+                     "allOf" : [
+                        {
+                           "field": "Microsoft.Compute/imagePublisher",
+                           "equals": "cisco"
+                           
+                        },
+                        {
+                          "field": "Microsoft.Compute/imageOffer",
+                          "equals": "cisco-asav"
+                       },
+                       {
+                          "field": "Microsoft.Compute/imageSku",
+                          "equals": "asav-azure-byol"
+                       }
+                     ]
+                  },
+                  {
+                     "allOf" : [
+                        {
+                           "field": "Microsoft.Compute/imagePublisher",
+                           "equals": "cisco"
+                           
+                        },
+                        {
+                          "field": "Microsoft.Compute/imageOffer",
+                          "equals": "cisco-ftdv"
+                       }
+                     ]
+                  },
+                  {
+                     "allOf" : [
+                        {
+                           "field": "Microsoft.Compute/imagePublisher",
+                           "equals": "cisco"
+                           
+                        },
+                        {
+                          "field": "Microsoft.Compute/imageOffer",
+                          "equals": "cisco-csr-1000v"
+                       }
+                     ]
+                  }, 
+                  {
+                     "allOf" : [
+                        {
+                           "field": "Microsoft.Compute/imagePublisher",
+                           "equals": "f5-networks"
+                           
+                        },
+                        {
+                          "field": "Microsoft.Compute/imageOffer",                          
+                          "like": "[concat('f5-big-ip','*')]"
+                       }
+                     ]
+                  },                 
+                  {
+                     "allOf" : [
+                        {
+                           "field": "Microsoft.Compute/imagePublisher",
+                           "equals": "f5-networks"
+                           
+                        },
+                        {
+                          "field": "Microsoft.Compute/imageOffer",
+                          "equals": "f5-web-application-firewall"
+                       },
+                       {
+                          "field": "Microsoft.Compute/imageSku",
+                          "equals": "f5-waf-solution-byol"
+                       }
+                     ]
+                  },
+                  {
+                     "allOf" : [
+                        {
+                           "field": "Microsoft.Compute/imagePublisher",
+                           "equals": "twistlock"
+                           
+                        },
+                        {
+                          "field": "Microsoft.Compute/imageOffer",
+                          "equals": "twistlock"
+                       },
+                       {
+                          "field": "Microsoft.Compute/imageSku",
+                          "equals": "enterprise-edition"
+                       }
+                     ]
+                  },
+                  {
+                     "allOf" : [
+                        {
+                           "field": "Microsoft.Compute/imagePublisher",
+                           "equals": "SUSE"
+                           
+                        },
+                        {
+                          "field": "Microsoft.Compute/imageOffer",
+                          "equals": "SLES"
+                       }
+                     ]
+                  },                  
+                  {
+                     "allOf" : [
+                        {
+                           "field": "Microsoft.Compute/imagePublisher",
+                           "equals": "SUSE"
+                           
+                        },
+                        {
+                          "field": "Microsoft.Compute/imageOffer",
+                          "equals": "SUSE-Manager-Server-BYOS"
+                       }
+                     ]
+                  },
+                  {
+                     "allOf" : [
+                        {
+                           "field": "Microsoft.Compute/imagePublisher",
+                           "equals": "SUSE"
+                           
+                        },
+                        {
+                          "field": "Microsoft.Compute/imageOffer",
+                          "equals": "SUSE-Manager-Proxy-BYOS"
+                       }
+                     ]
+                  },
+                  {
+                     "allOf" : [
+                        {
+                           "field": "Microsoft.Compute/imagePublisher",
+                           "equals": "redhat"
+                           
+                        },
+                        {
+                          "field": "Microsoft.Compute/imageOffer",
+                          "equals": "RHEL"
+                       }                       
+                     ]
+                  },                  
+                  {
+                     "allOf" : [
+                        {
+                           "field": "Microsoft.Compute/imagePublisher",
+                           "equals": "canonical"
+                           
+                        },
+                        {
+                          "field": "Microsoft.Compute/imageOffer",
+                          "equals": "UbuntuServer"
+                       }
+                     ]
+                  },
+                  {
+                     "allOf" : [
+                        {
+                           "field": "Microsoft.Compute/imagePublisher",
+                           "equals": "[concat('microsoft','*')]"
+                           
+                        }
+                     ]
+                  },                  
+                  {
+                     "allOf" : [
+                        {
+                           "field": "Microsoft.Compute/imagePublisher",
+                           "equals": "tenable"
+                           
+                        },
+                        {
+                          "field": "Microsoft.Compute/imageOffer",
+                          "equals": "tenablecorenessus"
+                       },
+                       {
+                          "field": "Microsoft.Compute/imageSku",
+                          "equals": "tenablecorenessusbyol"
+                       }
+                     ]
+                  },
+                  {
+                     "allOf" : [
+                        {
+                           "field": "Microsoft.Compute/imagePublisher",
+                           "equals": "commvault"
+                           
+                        },
+                        {
+                          "field": "Microsoft.Compute/imageOffer",
+                          "equals": "commvault"
+                       },
+                       {
+                          "field": "Microsoft.Compute/imageSku",
+                          "equals": "vspallinone"
+                       }
+                     ]
+                  },
+                  {
+                     "allOf" : [
+                        {
+                           "field": "Microsoft.Compute/imagePublisher",
+                           "equals": "Rapid7"
+                           
+                        },
+                        {
+                          "field": "Microsoft.Compute/imageOffer",
+                          "equals": "nexpose-scan-engine"
+                       },
+                       {
+                          "field": "Microsoft.Compute/imageSku",
+                          "equals": "nexpose-scan-engine"
+                       }
+                     ]
+                  },
+                  {
+                     "allOf" : [
+                        {
+                           "field": "Microsoft.Compute/imagePublisher",
+                           "equals": "Rapid7"
+                           
+                        },
+                        {
+                          "field": "Microsoft.Compute/imageOffer",
+                          "equals": "rapid7-vm-console"
+                       },
+                       {
+                          "field": "Microsoft.Compute/imageSku",
+                          "equals": "rapid7-vm-console"
+                       }
+                     ]
+                  }
+               ]
+            }
+         } 
+      ]
+   },
+   "then": {
+      "effect": "deny"
+   }
+}

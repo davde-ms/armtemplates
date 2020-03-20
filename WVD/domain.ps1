@@ -1,0 +1,42 @@
+Get-Disk | Where-Object PartitionStyle –Eq "RAW"| Initialize-Disk -PartitionStyle GPT
+Get-Disk -Number 2 | New-Partition -UseMaximumSize -DriveLetter F | Format-Volume -FileSystem NTFS -NewFileSystemLabel "Logs" -Confirm:$False      
+
+Install-WindowsFeature -Name AD-Domain-Services -IncludeManagementTools
+
+$domain = 'easternhealth.local'
+$NTDSPath = 'C:\Windows\NTDS'
+$NTDSLogPath = 'f:\windows\ntds'
+$SYSVOLPath = 'c:\windows\ntds'
+
+
+Import-Module ADDSDeployment
+
+Install-ADDSDomainController `
+
+-NoGlobalCatalog:$false `
+
+-CreateDnsDelegation:$false `
+
+-Credential (Get-Credential CONUNDRUM\Administrator) `
+
+-CriticalReplicationOnly:$false `
+
+-DatabasePath $NTDSPath `
+
+-DomainName $domain `
+
+-InstallDns:$true `
+
+-LogPath $NTDSLogPath `
+
+-NoRebootOnCompletion:$false `
+
+-SiteName "Default-First-Site-Name" `
+
+-SysvolPath $SYSVOLPath `
+
+-SafeModeAdministratorPassword (ConvertTo-SecureString 'P@ssw0rd' -AsPlainText -Force) `
+
+-SkipPreChecks
+
+-Force:$true
