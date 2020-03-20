@@ -3,10 +3,10 @@ Get-Disk -Number 2 | New-Partition -UseMaximumSize -DriveLetter F | Format-Volum
 
 Install-WindowsFeature -Name AD-Domain-Services -IncludeManagementTools
 
-$domain = 'easternhealth.local'
+$domain = 'domainfqdn.extension'
 $NTDSPath = 'C:\Windows\NTDS'
-$NTDSLogPath = 'f:\windows\ntds'
-$SYSVOLPath = 'c:\Windows\SYSVOL'
+$NTDSLogPath = 'F:\Windows\NTDS'
+$SYSVOLPath = 'C:\Windows\SYSVOL'
 $Site  = "Default-First-Site-Name"
 
 
