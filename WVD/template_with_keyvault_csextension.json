@@ -1,5 +1,5 @@
 {
-    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "location": {
@@ -187,6 +187,9 @@
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2019-07-01",
             "location": "[parameters('location')]",
+            "identity": {
+             "type": "SystemAssigned"
+             },
             "dependsOn": [
                 "managedDiskResources",
                 "[concat('Microsoft.Network/networkInterfaces/', concat(variables('vmName'), '-NIC'))]",
@@ -208,7 +211,7 @@
                 "imageReference": {
                         "publisher": "MicrosoftWindowsServer",
                         "offer": "WindowsServer",
-                        "sku": "2016-Datacenter",
+                        "sku": "2019-Datacenter",
                         "version": "latest"
                     },
                     "copy": [
@@ -272,6 +275,35 @@
                 "vmWorkload": "DomainController",
                 "owner": "greg.forward@centralhealth.nl.ca",
                 "environment": "Production"
+            }
+        },
+                {
+            "apiVersion": "2017-03-30",
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(variables('vmName'),'/CustomScriptExtension')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
+            ],
+            "tags": {
+                "displayName": "DC Promo"
+            },
+            "properties": {
+                "publisher": "Microsoft.Compute",
+                "type": "CustomScriptExtension",
+                "typeHandlerVersion": "1.10",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "fileUris": [
+                        "script location"
+                    ]
+                },
+                "protectedSettings": {
+                    "commandToExecute": "myExecutionCommand",
+                    "storageAccountName": "myStorageAccountName",
+                    "storageAccountKey": "myStorageAccountKey",
+                    "managedIdentity" : {}
+                }
             }
         },
         {

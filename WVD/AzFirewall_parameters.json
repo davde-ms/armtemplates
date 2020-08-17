@@ -1,0 +1,15 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "azFirewallName": {
+            "value": null
+        },
+        "azFirewallpip": {
+            "value": "fw-pip"
+        },
+        "virtualNetworks_eh_hub_vnet_externalid": {
+            "value": "/subscriptions/subscriptionID/resourceGroups/hub-fw-rg/providers/Microsoft.Network/virtualNetworks/hub-vnet"
+        }
+    }
+}

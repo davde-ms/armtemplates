@@ -1,5 +1,5 @@
 {
-    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "location": {
@@ -52,11 +52,27 @@
         "virtualMachineSize": {
             "type": "string"
         },
-        "localAdminUserName": {
+        "localAdminUsername": {
             "type": "string"
         },
         "localAdminUserPassword": {
             "type": "secureString"
+        },
+         "owner": {
+            "type": "string"
+        },
+         "costCenter": {
+            "type": "string"
+        },
+         "environment": {
+            "type": "string",
+            "defaultValue": "Production",
+            "allowedValues": [
+                "Dev",
+                "Test",
+                "QA",
+                "Production"
+            ]
         },
         "availabilitySetName": {
             "type": "string"
@@ -128,8 +144,9 @@
             },
             "tags": {
                 "vmWorkload": "DomainController",
-                "owner": "greg.forward@centralhealth.nl.ca",
-                "environment": "Production"
+                "Owner": "[parameters('owner')]",
+                "Environment": "[parameters('environment')]",
+                "Cost Center": "[parameters('costCenter')]"
             }
         },
         {
@@ -142,8 +159,9 @@
             },
             "tags": {
                 "vmWorkload": "DomainController",
-                "owner": "greg.forward@centralhealth.nl.ca",
-                "environment": "Production"
+                "Owner": "[parameters('owner')]",
+                "Environment": "[parameters('environment')]",
+                "Cost Center": "[parameters('costCenter')]"
             }
         },
         {
@@ -159,8 +177,9 @@
             },
             "tags": {
                 "vmWorkload": "DomainController",
-                "owner": "greg.forward@centralhealth.nl.ca",
-                "environment": "Production"
+                "Owner": "[parameters('owner')]",
+                "Environment": "[parameters('environment')]",
+                "Cost Center": "[parameters('costCenter')]"
             }
         },
         {
@@ -178,8 +197,9 @@
             },
             "tags": {
                 "vmWorkload": "DomainController",
-                "owner": "greg.forward@centralhealth.nl.ca",
-                "environment": "Production"
+                "Owner": "[parameters('owner')]",
+                "Environment": "[parameters('environment')]",
+                "Cost Center": "[parameters('costCenter')]"
             }
         },
         {
@@ -187,6 +207,9 @@
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2019-07-01",
             "location": "[parameters('location')]",
+            "identity": {
+             "type": "SystemAssigned"
+             },
             "dependsOn": [
                 "managedDiskResources",
                 "[concat('Microsoft.Network/networkInterfaces/', concat(variables('vmName'), '-NIC'))]",
@@ -208,7 +231,7 @@
                 "imageReference": {
                         "publisher": "MicrosoftWindowsServer",
                         "offer": "WindowsServer",
-                        "sku": "2016-Datacenter",
+                        "sku": "2019-Datacenter",
                         "version": "latest"
                     },
                     "copy": [
@@ -238,7 +261,7 @@
                 },
                 "osProfile": {
                     "computerName": "[variables('vmName')]",
-                    "adminUserName": "[parameters('localAdminUserName')]",
+                    "adminUserName": "[parameters('localAdminUsername')]",
                     "adminPassword": "[parameters('localAdminUserPassword')]",
                     "windowsConfiguration": {
                         "enableAutomaticUpdates": true,
@@ -252,8 +275,9 @@
             },
             "tags": {
                 "vmWorkload": "DomainController",
-                "owner": "greg.forward@centralhealth.nl.ca",
-                "environment": "Production"
+                "Owner": "[parameters('owner')]",
+                "Environment": "[parameters('environment')]",
+                "Cost Center": "[parameters('costCenter')]"
             }
         },
         {
@@ -270,8 +294,9 @@
             },
             "tags": {
                 "vmWorkload": "DomainController",
-                "owner": "greg.forward@centralhealth.nl.ca",
-                "environment": "Production"
+                "Owner": "[parameters('owner')]",
+                "Environment": "[parameters('environment')]",
+                "Cost Center": "[parameters('costCenter')]"
             }
         },
         {
@@ -299,15 +324,16 @@
             },
             "tags": {
                 "vmWorkload": "DomainController",
-                "owner": "greg.forward@centralhealth.nl.ca",
-                "environment": "Production"
+                "Owner": "[parameters('owner')]",
+                "Environment": "[parameters('environment')]",
+                "Cost Center": "[parameters('costCenter')]"
             }
         }
     ],
     "outputs": {
-        "localAdminUserName": {
+        "localAdminUsername": {
             "type": "string",
-            "value": "[parameters('localAdminUserName')]"
+            "value": "[parameters('localAdminUsername')]"
         }
     }
 }

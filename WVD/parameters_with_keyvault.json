@@ -9,21 +9,39 @@
               }
         },
         "vmPrefix": {
-            "value": "prefix",
+            "value": "MyCorp-DC",
             "metadata": {
                 "description": "Prefix used to build the virtual machine name"
               }
         },
         "vmSuffix": {
-            "value": "suffix",
+            "value": "",
             "metadata": {
                 "description": "Suffix to build the virtual machhine name"
               }
         },
         "vmSuffixStartNumber": {
-            "value": 1,
+            "value": 2,
             "metadata": {
                 "description": "Counter used between the prefix and the suffix to build the virtual machine name. If only entering a single digit number we will pad a zero to the left. Padding can be modified by changing the Pad function in the variables secion of the template. End result will look like prefix01suffix"
+              }
+        },
+        "owner": {
+            "value": "davde@microsoft.com",
+            "metadata": {
+                "description": "Resource owner email address"
+              }
+        },
+        "environment": {
+            "value": "Production",
+            "metadata": {
+                "description": "Deployment environment"
+              }
+        },
+        "costCenter": {
+            "value": "302039",
+            "metadata": {
+                "description": "Resource associated cost center"
               }
         },
         "networkSecurityGroupRules": {
@@ -50,7 +68,7 @@
               }
         },
         "virtualNetworkId": {
-            "value": "/subscriptions/subscriptionID/resourceGroups/vnetresourcegroupname/providers/Microsoft.Network/virtualNetworks/vnetname",
+            "value": "/subscriptions/5a964cf5-1aeb-4356-b3a1-c76337b405da/resourceGroups/rg_vnet_can_central/providers/Microsoft.Network/virtualNetworks/vnet_canadacentral",
             "metadata": {
                 "description": "Make sure to replace the subscriptionID, vnetresourcegroupename and vnetname in the string above"
               }
@@ -88,7 +106,7 @@
                 {
                     "sku": "StandardSSD_LRS",
                     "properties": {
-                        "diskSizeGB": 128,
+                        "diskSizeGB": 32,
                         "creationData": {
                             "createOption": "empty"
                         }
@@ -99,20 +117,20 @@
         "virtualMachineSize": {
             "value": "Standard_DS1_v2"
         },
-        "localadminUsername": {
+        "localAdminUsername": {
             "reference": {
               "keyVault": {
-              "id": "/subscriptions/1c9c57c1-a270-4b24-ac78-3849644d55f5/resourceGroups/rg_keyvault_canadacentral/providers/Microsoft.KeyVault/vaults/MyCorp"
+              "id": "/subscriptions/5a964cf5-1aeb-4356-b3a1-c76337b405da/resourceGroups/rg_mycorpkeyvault/providers/Microsoft.KeyVault/vaults/mycorpkeyvault"
               },
-              "secretName": "adminUsername"
+              "secretName": "localAdminUsername"
             }
           },
-        "localadminPassword": {
+        "localAdminUserPassword": {
             "reference": {
               "keyVault": {
-              "id": "/subscriptions/1c9c57c1-a270-4b24-ac78-3849644d55f5/resourceGroups/rg_keyvault_canadacentral/providers/Microsoft.KeyVault/vaults/MyCorp"
+              "id": "/subscriptions/5a964cf5-1aeb-4356-b3a1-c76337b405da/resourceGroups/rg_mycorpkeyvault/providers/Microsoft.KeyVault/vaults/mycorpkeyvault"
               },
-              "secretName": "adminPassword"
+              "secretName": "localAdminPassword"
             }
           },
         "availabilitySetName": {
@@ -125,13 +143,13 @@
             "value": 5
         },
         "autoShutdownStatus": {
-            "value": "Disabled"
+            "value": "Enabled"
         },
         "autoShutdownTime": {
             "value": "19:00"
         },
         "autoShutdownTimeZone": {
-            "value": "UTC"
+            "value": "US Eastern Standard Time"
         },
         "autoShutdownNotificationStatus": {
             "value": "Enabled"
@@ -140,7 +158,7 @@
             "value": "en"
         },
         "autoShutdownNotificationEmail": {
-            "value": "user@domain.com"
+            "value": "davde@microsoft.com"
         }
     }
 }

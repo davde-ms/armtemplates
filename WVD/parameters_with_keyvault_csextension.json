@@ -9,13 +9,13 @@
               }
         },
         "vmPrefix": {
-            "value": "prefix",
+            "value": "MyCorp-DC",
             "metadata": {
                 "description": "Prefix used to build the virtual machine name"
               }
         },
         "vmSuffix": {
-            "value": "suffix",
+            "value": "",
             "metadata": {
                 "description": "Suffix to build the virtual machhine name"
               }
@@ -50,7 +50,7 @@
               }
         },
         "virtualNetworkId": {
-            "value": "/subscriptions/subscriptionID/resourceGroups/vnetresourcegroupname/providers/Microsoft.Network/virtualNetworks/vnetname",
+            "value": "/subscriptions/1c9c57c1-a270-4b24-ac78-3849644d55f5/resourceGroups/rg_vnet_can_central/providers/Microsoft.Network/virtualNetworks/vnet_canadacentral",
             "metadata": {
                 "description": "Make sure to replace the subscriptionID, vnetresourcegroupename and vnetname in the string above"
               }
@@ -65,7 +65,7 @@
             "value": "StandardSSD_LRS"
         },
         "osDiskSize": {
-            "value": 128
+            "value": 64
         },
         "dataDisks": {
             "value": [
@@ -88,7 +88,7 @@
                 {
                     "sku": "StandardSSD_LRS",
                     "properties": {
-                        "diskSizeGB": 128,
+                        "diskSizeGB": 32,
                         "creationData": {
                             "createOption": "empty"
                         }
@@ -125,13 +125,13 @@
             "value": 5
         },
         "autoShutdownStatus": {
-            "value": "Disabled"
+            "value": "Enabled"
         },
         "autoShutdownTime": {
             "value": "19:00"
         },
         "autoShutdownTimeZone": {
-            "value": "UTC"
+            "value": "US Eastern Standard Time"
         },
         "autoShutdownNotificationStatus": {
             "value": "Enabled"
@@ -140,7 +140,7 @@
             "value": "en"
         },
         "autoShutdownNotificationEmail": {
-            "value": "user@domain.com"
+            "value": "davde@microsoft.com"
         }
     }
 }

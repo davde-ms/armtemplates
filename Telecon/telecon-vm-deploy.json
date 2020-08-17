@@ -234,7 +234,7 @@
             "dependsOn": [
                 "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineNamePrefix'), copyIndex(1))]"
             ]
-        },
+        }
 
     ],
     "outputs": {
